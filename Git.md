@@ -224,3 +224,12 @@ $ ssh-keygen -t rsa -C "youremail@example.com"
 添加后，远程库的名字就是`origin`，这是Git默认的叫法，也可以改成别的，但是`origin`这个名字一看就知道是远程库。
 
 下一步，就可以把本地库的所有内容推送到远程库上：
+
+```
+$ git add javaAndLife.md
+$ git add MySQL.md
+$ git commit -m "other notes"
+$ git remote add origin git@github.com:xuan-jin/learngit.git
+$ git push -u origin master
+```
+
