@@ -229,7 +229,7 @@ $ ssh-keygen -t rsa -C "youremail@example.com"
 $ git add javaAndLife.md
 $ git add MySQL.md
 $ git commit -m "other notes"
-$ git remote add origin git@github.com:xuan-jin/learngit.git
+$ git remote add origin git@github.com:xuan-jin/learngit.git
 $ git push -u origin master
 ```
 
