@@ -6,4 +6,4 @@ How are you?
 
 learn all day!
 
-Lenovo
+Lenovo computer
