@@ -225,11 +225,125 @@ $ ssh-keygen -t rsa -C "youremail@example.com"
 
 下一步，就可以把本地库的所有内容推送到远程库上：
 
+把本地库的内容推送到远程，用`git push`命令，实际上是把当前分支`master`推送到远程。由于远程库是空的，我们第一次推送`master`分支时，加上了`-u`参数，Git不但会把本地的`master`分支内容推送的远程新的`master`分支，还会把本地的`master`分支和远程的`master`分支关联起来，在以后的推送或者拉取时就可以简化命令。
+
 ```
 $ git add javaAndLife.md
 $ git add MySQL.md
 $ git commit -m "other notes"
 $ git remote add origin git@github.com:xuan-jin/learngit.git
 $ git push -u origin master
+
+// 之后的简化命令（从现在起，只要本地作了提交，就可以通过命令，把本地master分支的最新修改推送至GitHub）
+$ git push origin master
 ```
+
+
+
+### 从远程库克隆
+
+登陆GitHub，创建一个新的仓库
+
+勾选`Initialize this repository with a README`，这样GitHub会自动为我们创建一个`README.md`文件
+
+远程库已经准备好了，下一步是用命令`git clone`克隆一个本地库
+
+```
+$ git clone git@github.com:xuan-jin/huangfu.git
+```
+
+
+
+## 分支管理
+
+你创建了一个属于你自己的分支，别人看不到，还继续在原来的分支上正常工作，而你在自己的分支上干活，想提交就提交，直到开发完毕后，再一次性合并到原来的分支上，这样，既安全，又不影响别人工作。
+
+### 创建与合并分支
+
+当我们创建新的分支，例如`dev`时，Git新建了一个指针叫`dev`，指向`master`相同的提交，再把`HEAD`指向`dev`，就表示当前分支在`dev`上
+
+```
+$ git checkout -b dev			// 创建并切换到dev分支
+$ git switch -c dev				// 同上
+
+$ git branch dev				// 创建dev分支
+$ git checkout dev				// 切换到dev分支
+
+$ git branch					// 查看分支，当前分支前有*。
+
+$ git checkout master			// 切换回master分支
+$ git merge dev					//把dev分支的工作合并到master分支上
+(合并某分支到当前分支)
+
+$ git branch -d dev				 // 删除dev分支
+```
+
+
+
+### 解决冲突
+
+在不同的分支对同一个文件分别进行提交，则可能会造成冲突。
+
+手动修改后，再进行提交。
+
+```
+$ git log --graph --pretty=oneline --abbrev-commit
+// 查看分支合并情况（图）
+```
+
+
+
+### 分支管理策略
+
+通常，合并分支时，如果可能，Git会用`Fast forward`模式，但这种模式下，删除分支后，会丢掉分支信息。
+
+如果要强制禁用`Fast forward`模式，Git就会在merge时生成一个新的commit，这样，从分支历史上就可以看出分支信息。
+
+```
+$ git merge --no-ff -m "merge with no-ff" dev
+// --no-ff表示禁用Fast forward
+
+$ git log --graph --pretty=oneline --abbrev-commit
+// 我们用git log看看分支历史
+```
+
+分支策略
+
+master分支应该保持非常稳定，也就是仅用来发布新版本，平时不能在上面干活；
+
+干活都在`dev`分支上，也就是说，`dev`分支是不稳定的，到某个时候，比如1.0版本发布时，再把`dev`分支合并到`master`上，在`master`分支发布1.0版本；
+
+你和你的小伙伴们每个人都在`dev`分支上干活，每个人都有自己的分支，时不时地往`dev`分支上合并就可以了。
+
+
+
+### Bug分支
+
+软件开发，bug常有。Git分支强大，每个bug都可以通过一个新的临时分支来修复，修复后，合并分支，然后将临时分支删除。
+
+若修复bug工作和你手头正在进行的工作冲突，则可通过stash功能吧当前工作现场“存储”起来，等恢复现场后继续工作。
+
+```
+$ git stash
+// "储藏"当前工作现场
+
+$ git stash list
+// 查看已存储的工作区
+
+$ git stash apply			// 恢复存储的工作区
+$ git stash drop			// 删除存储的工作区
+$ git stash pop				// 恢复的同时把stash也删了
+$ git stash apply stash@{0}  多次stash，恢复的时候，先用git stash list查看，然后恢复指定的stash
+# 通常在 dev 分支开发时,需要有紧急 bug 需要马上处理,保存现在修改的文件等,先修复 bug 后再回来继续工作的情况
+
+$ git cherry-pick <commit> 复制一个特定的提交到当前分支(当前分支的内容需要先 commit,然后冲突的文件需要解决冲突,然后 commit)
+// 在master分支上修复bug后，对于之前从master分支出来的dev上也存在bug，简单的处理办法
+
+```
+
+
+
+
+
+
 
