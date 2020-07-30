@@ -6,7 +6,7 @@
 
 
 
-## We are looking foeward to our future!
+## We are looking forward to our future!
 
 
 ## abandonFond!
