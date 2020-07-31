@@ -336,14 +336,51 @@ $ git stash pop				// 恢复的同时把stash也删了
 $ git stash apply stash@{0}  多次stash，恢复的时候，先用git stash list查看，然后恢复指定的stash
 # 通常在 dev 分支开发时,需要有紧急 bug 需要马上处理,保存现在修改的文件等,先修复 bug 后再回来继续工作的情况
 
-$ git cherry-pick <commit> 复制一个特定的提交到当前分支(当前分支的内容需要先 commit,然后冲突的文件需要解决冲突,然后 commit)
+$ git cherry-pick <commit> 
+// 复制一个特定的提交到当前分支(当前分支的内容需要先 commit,然后冲突的文件需要解决冲突,然后 commit)
 // 在master分支上修复bug后，对于之前从master分支出来的dev上也存在bug，简单的处理办法
 
 ```
 
 ### Feature分支
 
+开发一个新feature，最好新建一个分支；
+
+如果要丢弃一个没有被合并过的分支，可以通过`git branch -D <name>`强行删除。
 
 
 
+### 多人协作
+
+```
+$ git remote 			// 查看远程库的信息
+$ git remote -v			// 查看远程库更详细的信息
+
+$ git push origin master
+$ git push origin dev		// 推送master或dev分支到远程库
+
+// 当你的小伙伴从远程库clone时，默认情况下，你的小伙伴只能看到本地的master分支。
+// 要在dev分支上开发，就必须创建远程origin的dev分支到本地
+$ git checkout -b dev origin/dev
+
+// 两人对同一文件更改后，在提交时会发生冲突，解决：
+$ git pull
+// 如果git pull失败，原因是没有指定本地dev分支与远程origin/dev分支的链接
+$ git branch --set-upstream-to=origin/dev dev
+$ git pull
+
+```
+
+
+
+### Rebase
+
+把分叉的提交历史“整理”成一条直线，看上去更直观。缺点是本地的分叉提交已经被修改过了。
+
+- rebase操作可以把本地未push的分叉提交历史整理成直线；
+- rebase的目的是使得我们在查看历史提交的变化时更容易，因为分叉的提交需要三方对比。
+
+```
+$ git rebase
+```
 

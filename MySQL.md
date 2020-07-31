@@ -582,3 +582,50 @@ mysql> select * from eatery;
 
 对于多余的字段，要考虑是否要删除
 
+
+
+## 单表查询
+
+### select ，from，dual，where
+
+```mysql
+select + '查询内容'			
+select + 数据计算式				// 得出结果
+select + '查询内容' as + 字段名
+
+select * from t1,t2;			// 输出t1和t2的笛卡尔积
+// example
+mysql> select * from student_2;
++----+---------+-------+----------+
+| id | name    | phone | address  |
++----+---------+-------+----------+
+|  1 | xuanjin | 1234  | hangzou  |
+|  2 | yip     | 5678  | shanghai |
++----+---------+-------+----------+
+mysql> select * from student_3; 
++----+---------+-------+------------+
+| id | name    | phone | address    |
++----+---------+-------+------------+
+|  5 | frank   | 0000  | shanxi     |
+|  6 | frank_2 | 11111 | shanxi_222 |
++----+---------+-------+------------+
+mysql> select * from student_2, student_3; 
++----+---------+-------+----------+----+---------+-------+------------+
+| id | name    | phone | address  | id | name    | phone | address    |
++----+---------+-------+----------+----+---------+-------+------------+
+|  1 | xuanjin | 1234  | hangzou  |  5 | frank   | 0000  | shanxi     |
+|  2 | yip     | 5678  | shanghai |  5 | frank   | 0000  | shanxi     |
+|  1 | xuanjin | 1234  | hangzou  |  6 | frank_2 | 11111 | shanxi_222 |
+|  2 | yip     | 5678  | shanghai |  6 | frank_2 | 11111 | shanxi_222 |
++----+---------+-------+----------+----+---------+-------+------------+
+
+select 2*7 as res;					// 该句后默认带from dual 查询来自默认伪表
+select 2*7 as res from dual;	
+
+select * from student where id=2;     
+// where后面可以跟上判断的语句，如=,!=.and,or  等来具体查询
+// where后面还可跟in，例如where address in ('shanghai','beijing');
+// 即可查出shanghai，beijing的数据
+```
+
+### 
