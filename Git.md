@@ -122,7 +122,7 @@ $ GIT reset --hard <commit_id>
 
 // 回退到 commit_id 对应的版本，commid_id 为版本号，只需要前几位就行了
 $ cat readme.txt		// 查看文件内容
-$ git reflog  			// 找回曾经版本的commit_id
+$ git reflog  			// 记录你的每一次命令,找回曾经版本的commit_id
 ```
 
 
