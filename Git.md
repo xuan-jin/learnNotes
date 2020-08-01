@@ -384,3 +384,47 @@ $ git pull
 $ git rebase
 ```
 
+
+
+## 标签管理
+
+发布一个版本时，我们通常先在版本库中打一个标签（tag），这样，就唯一确定了打标签时刻的版本。将来无论什么时候，取某个标签的版本，就是把那个打标签的时刻的历史版本取出来。所以，标签也是版本库的一个快照。
+
+Git的标签虽然是版本库的快照，但其实它就是指向某个commit的指针（跟分支很像对不对？但是分支可以移动，标签不能移动），所以，创建和删除标签都是瞬间完成的。
+
+tag就是一个让人容易记住的有意义的名字，它跟某个commit绑在一起。
+
+```
+$ git branch		// 显示所有分支
+$ git checkout master	// 切换到某分支
+$ git tag v1.0		// 打上一个名为 v1.0 的标签，默认标签是打在最新提交的commit上的。
+$ git tag			// 查看所有标签
+
+$ git log --pretty=oneline --abbrev-commit 	// 找到历史提交的commit id
+$ git tag v0.9 f52c633		// 为之前的commit id为f52c633的提交打上标签v0.9
+// 注意，标签不是按时间顺序列出，而是按字母排序的。
+$ git tag -a v0.1 -m "version 0.1 released" 1094adb
+// 还可以创建带有说明的标签，用-a指定标签名，-m指定说明文字
+
+$ git tag -d v1.0 		// 删除标签
+$ git push origin v1.0   // 推送v1.0标签到远程
+$ git push origin --tags // 一次性推送所有尚未推送到远程的标签
+
+// 如果标签已经推送到远程,先从本地删除,然后，从远程删除
+$ git tag -d v1.0					// 删除本地
+$ git push origin :refs/tags/v1.0	  // 删除远程
+```
+
+
+
+## 使用GitHub
+
+在GitHub上，可以任意Fork开源仓库；
+
+自己拥有Fork后的仓库的读写权限；
+
+可以推送pull request给官方仓库来贡献代码。
+
+
+
+## 自定义Git

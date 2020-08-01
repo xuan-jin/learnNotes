@@ -2,7 +2,7 @@
 
 
 
-## Lifeis challenge and art!
+## Life is challenge and art!
 
 
 
