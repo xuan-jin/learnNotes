@@ -586,7 +586,7 @@ mysql> select * from eatery;
 
 ## 单表查询
 
-### select ，from，dual，where
+### select , from.dual, where, in, between...and, null
 
 ```mysql
 select + '查询内容'			
@@ -619,13 +619,29 @@ mysql> select * from student_2, student_3;
 |  2 | yip     | 5678  | shanghai |  6 | frank_2 | 11111 | shanxi_222 |
 +----+---------+-------+----------+----+---------+-------+------------+
 
-select 2*7 as res;					// 该句后默认带from dual 查询来自默认伪表
-select 2*7 as res from dual;	
+select 2*7 as res;					// 该句后默认带from dual 
+select 2*7 as res from dual;		 // 查询来自默认伪表
 
 select * from student where id=2;     
 // where后面可以跟上判断的语句，如=,!=.and,or  等来具体查询
 // where后面还可跟in，例如where address in ('shanghai','beijing');
-// 即可查出shanghai，beijing的数据
+// 即可查出shanghai，beijing的数据，类似的，还可以使用 not in
+
+select * from student where age between 15 to 20;
+select * from student where age not between 15 to 20;
+//　根据数据范围进行查找
+
+select * from student where age is null;
+select * from student where age is not null;
+// 查找字段中为空的数据
+
+// 聚合函数
+select sum(chinese) from score;		// 求表score中chinese字段的和
+select avg(chinese) from score;		// 平均值
+select max(chinese) from score;		// 最大值
+select min(chinese) from score;		// 最小值
+select count(chinese) from score;		// 次数，
 ```
 
-### 
+
+
