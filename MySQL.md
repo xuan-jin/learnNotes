@@ -591,7 +591,7 @@ mysql> select * from eatery;
 ```mysql
 select + '查询内容'			
 select + 数据计算式				// 得出结果
-select + '查询内容' as + 字段名
+select + '查询内容' as + 字段名	// as 起别名
 
 select * from t1,t2;			// 输出t1和t2的笛卡尔积
 // example
@@ -640,8 +640,29 @@ select sum(chinese) from score;		// 求表score中chinese字段的和
 select avg(chinese) from score;		// 平均值
 select max(chinese) from score;		// 最大值
 select min(chinese) from score;		// 最小值
-select count(chinese) from score;		// 次数，
+select count(chinese) from score;	// 次数，
 ```
 
 
+
+### 模糊查询，排序查询， 分组查询，
+
+```mysql
+// 模糊查询
+select * from student where name like '张%';		// % 表示模糊多个字节
+select * from student where name like '高_';		// _ 表示只查询其后带一个字节的
+
+//  排序查询
+select * from student order by number asc;		// 对字段number排序查询，升序
+select * from student order by number desc;		// 对字段number排序查询，降序
+
+// 分组查询
+select avg(age) as '年龄', gender as '性别' from student group by gender;
+select avg(age) as '年龄', sddress as '地区' from student group by address;
+select avg(age) as '年龄', address as '地区' from student group by address desc;
+// 对于分组查询，语句前半部分必须是聚合函数如avg(age),as+''起别名，
+// 逗号后面先是要分组的字段+(as+'')+from+表名+group by+要分组的字段+(排序asc/desc);
+
+
+```
 
