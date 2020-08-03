@@ -685,13 +685,45 @@ select all address from student;		//  默认情况下自带all，查询该字段
 
 ## 多表查询
 
+```mysql
+// union联合查询
+select age, gender from student union select name, phone from teacher;
+select age, gender from student union distinct select name, phone from teacher;
+// 联合查询可以是两张表中的不同字段，但是前后字段数目必须相同，同时还可加distinct去重
+
+// 内连接 inner join
+select name, score from student inner join score on student.id=score.student_id;
+// select 字段 from 主表名 inner join 从表名 on 表名.字段=表名.字段;
+
+// 左连接 left join
+// 以左表为基准以主表为基准，主表中的每一条数据都使用
+select name, score from student left join score on student.id=score.student_id;
+
+// 右连接 right join
+// 以右表为基准以从表为基准，从表中的每一条数据都使用
+select name, score from student right join score on student.id=score.student_id;
+
+// 笛卡尔积 cross join 
+select * from student_5 cross join student_6;
+
+// 自然连接 natural join
+// 按照两张表中相同字段名对两张表进行整理
+// 如果两张表中没有相同的字段名，则返回笛卡尔积
+select * from student_5 natural join student_6;
+select * from student_5 natural left join student_6;
+select * from student_5 natural right join student_6;
+
+// 如果两个表中有多个字段名相同，则使用 using() 来指定字段
+select * from student_5 inner join student_6 using(id);
+
+// 注意：
+// 在实际使用中，更多的使用完整的 inner join 内连接来进行关联
+// 这样可以更清晰的展示表结构以及减少错误
+```
 
 
 
-
-
-
-
+## 子查询
 
 
 
