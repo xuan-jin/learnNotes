@@ -428,3 +428,112 @@ $ git push origin :refs/tags/v1.0	  // 删除远程
 
 
 ## 自定义Git
+
+
+
+```
+// 让Git显示颜色，会让命令输出看起来更醒目
+$ git config --global color.ui true
+
+```
+
+### 忽略特殊文件
+
+有些时候，你必须把某些文件放到Git工作目录中，但又不能提交它们，比如保存了数据库密码的配置文件啦，等等，每次`git status`都会显示`Untracked files ...`
+
+好在Git考虑到了大家的感受，这个问题解决起来也很简单，在Git工作区的根目录下创建一个特殊的`.gitignore`文件，然后把要忽略的文件名填进去，Git就会自动忽略这些文件。
+
+不需要从头写`.gitignore`文件，GitHub已经为我们准备了各种配置文件，只需要组合一下就可以使用了。所有配置文件可以直接在线浏览：https://github.com/github/gitignore
+
+忽略文件的原则是：
+
+1. 忽略操作系统自动生成的文件，比如缩略图等；
+2. 忽略编译生成的中间文件、可执行文件等，也就是如果一个文件是通过另一个文件自动生成的，那自动生成的文件就没必要放进版本库，比如Java编译产生的`.class`文件；
+3. 忽略你自己的带有敏感信息的配置文件，比如存放口令的配置文件。
+
+
+
+### 配置别名
+
+偷懒的方法
+
+```
+$ git config --global alias.st status		// 告诉Git，以后st就表示status
+$ git config --global alias.co checkout		
+$ git config --global alias.ci commit
+$ git config --global alias.br branch
+
+// --global参数是全局参数，也就是这些命令在这台电脑的所有Git仓库下都有用。
+// 加上--global是针对当前用户起作用的，如果不加，那只针对当前的仓库起作用。
+// 每个仓库的Git配置文件都放在.git/config文件中：
+```
+
+
+
+### 搭建GIt服务器
+
+搭建Git服务器需要准备一台运行Linux的机器，强烈推荐用Ubuntu或Debian，这样，通过几条简单的`apt`命令就可以完成安装。
+
+假设你已经有`sudo`权限的用户账号，下面，正式开始安装。
+
+第一步，安装`git`：
+
+```
+$ sudo apt-get install git
+```
+
+第二步，创建一个`git`用户，用来运行`git`服务：
+
+```
+$ sudo adduser git
+```
+
+第三步，创建证书登录：
+
+收集所有需要登录的用户的公钥，就是他们自己的`id_rsa.pub`文件，把所有公钥导入到`/home/git/.ssh/authorized_keys`文件里，一行一个。
+
+第四步，初始化Git仓库：
+
+先选定一个目录作为Git仓库，假定是`/srv/sample.git`，在`/srv`目录下输入命令：
+
+```
+$ sudo git init --bare sample.git
+```
+
+Git就会创建一个裸仓库，裸仓库没有工作区，因为服务器上的Git仓库纯粹是为了共享，所以不让用户直接登录到服务器上去改工作区，并且服务器上的Git仓库通常都以`.git`结尾。然后，把owner改为`git`：
+
+```
+$ sudo chown -R git:git sample.git
+```
+
+第五步，禁用shell登录：
+
+出于安全考虑，第二步创建的git用户不允许登录shell，这可以通过编辑`/etc/passwd`文件完成。找到类似下面的一行：
+
+```
+git:x:1001:1001:,,,:/home/git:/bin/bash
+```
+
+改为：
+
+```
+git:x:1001:1001:,,,:/home/git:/usr/bin/git-shell
+```
+
+这样，`git`用户可以正常通过ssh使用git，但无法登录shell，因为我们为`git`用户指定的`git-shell`每次一登录就自动退出。
+
+第六步，克隆远程仓库：
+
+现在，可以通过`git clone`命令克隆远程仓库了，在各自的电脑上运行：
+
+```
+$ git clone git@server:/srv/sample.git
+Cloning into 'sample'...
+warning: You appear to have cloned an empty repository.
+```
+
+剩下的推送就简单了。
+
+### 使用SourceTree
+
+Git有很多图形界面工具，这里我们推荐[SourceTree](https://www.sourcetreeapp.com/)，它是由[Atlassian](https://www.atlassian.com/)开发的免费Git图形界面工具，可以操作任何Git库。
