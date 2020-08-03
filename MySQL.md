@@ -356,7 +356,7 @@ insert into t_6 values('2020-07-13 19:01:00');
 
 ### 数据库完整性
 
-#### 实体完整性：
+#### 实体完整性
 
 // 同一数据表中不可有多项记录拥有相同识别
 
@@ -382,7 +382,7 @@ insert into t_6 values('2020-07-13 19:01:00');
 
 ### 外键
 
- 通过一个字段将两张表关联起来
+通过一个字段将两张表关联起来
 
 但是在实际开发中一般不使用外键，甚至禁止使用外键
 
@@ -391,7 +391,7 @@ insert into t_6 values('2020-07-13 19:01:00');
 查看外键的方式
 
 ```mysql
-show create table + 表名
+show create table + 表名;
 ```
 
 创建一个主表
@@ -594,7 +594,7 @@ select + 数据计算式				// 得出结果
 select + '查询内容' as + 字段名	// as 起别名
 
 select * from t1,t2;			// 输出t1和t2的笛卡尔积
-// example
+// example 笛卡尔积
 mysql> select * from student_2;
 +----+---------+-------+----------+
 | id | name    | phone | address  |
@@ -645,7 +645,7 @@ select count(chinese) from score;	// 次数，
 
 
 
-### 模糊查询，排序查询， 分组查询，
+### 模糊查询，排序查询， 分组查询，having，limit，distinct
 
 ```mysql
 // 模糊查询
@@ -658,11 +658,40 @@ select * from student order by number desc;		// 对字段number排序查询，�
 
 // 分组查询
 select avg(age) as '年龄', gender as '性别' from student group by gender;
-select avg(age) as '年龄', sddress as '地区' from student group by address;
+select avg(age) as '年龄', address as '地区' from student group by address;
 select avg(age) as '年龄', address as '地区' from student group by address desc;
+select group_concat(id), gender from student_1 group by gender;
 // 对于分组查询，语句前半部分必须是聚合函数如avg(age),as+''起别名，
 // 逗号后面先是要分组的字段+(as+'')+from+表名+group by+要分组的字段+(排序asc/desc);
 
+// having
+select avg(age) as 'age', address as 'address' from student group by address having age > 24;
+// 对查询的结果再次进行筛选查询
+// as 起别名的好处就在于可以方便对查询结果进行再筛选时使用
+
+// limit
+select * from student limit 0, 3;	// 从表中第0号开始，查询3条数据
+select * from student limit 3;		// 只有一个数字，则默认从0 开始查x条数据
+select 8 from student order by age asc limit 3;	// 结合排序查找年龄最小的三个
+
+// distinct  去重
+select distinct address from student;	//  查询所有address，不重复
+select count(distinct address) from student; // 计数，共有多少不同的城市
+select all address from student;		//  默认情况下自带all，查询该字段的所有
 
 ```
+
+
+
+## 多表查询
+
+
+
+
+
+
+
+
+
+
 
