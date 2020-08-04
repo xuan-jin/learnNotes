@@ -725,5 +725,44 @@ select * from student_5 inner join student_6 using(id);
 
 ## 子查询
 
+```mysql
+select * from student where id in (select studnet_id from score where score>=85);
+select * from student where id not in (select studnet_id from score where score>=85);
+// 查询score表中分数大于（不大于）85的学生，打印出其对应的studnet表中的信息
 
+select * from studnet where id exists (select studnet_id from score where score>=85);
+select * from studnet where id not exists (select studnet_id from score where score>=85);
+// 如果score表中有大于（不大于）85的学生，则打印出studnet表中的全部信息
+
+
+```
+
+
+
+## 高级部分
+
+### 视图
+
+隐藏表中的敏感数据和表的结构，降低select语句的复杂程度
+
+```mysql
+// 创建视图
+create view view_1 as select name, phone from student;
+create view view_2 as select name, phone, score from student inner join score on student.id=score.student_id;
+
+// 显示视图。
+// 因为视图和表都在一起显示，在命名视图时应加上前缀vw，以进行区分
+show tables;
+// 查看视图
+desc view_1;
+show create view_1;
+select * from view_1;
+
+// 修改视图（修改此视图的查询内容）
+alter view view_1 as select name from student;
+// 删除视图
+drop view view_1;
+
+
+```
 
