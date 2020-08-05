@@ -766,3 +766,124 @@ drop view view_1;
 
 ```
 
+
+
+### 事务
+
+应用于转账，资金等方面
+
+```mysql
+start transaction;		// 开始事务
+update wallet set balance=balance-50 where id=1;
+update wallet set balance=balance+50 where id=2;	// 双方确认
+commit;			// 提交
+
+rollback;		// 回滚。在事务未提交之前可以执行此命令以取消之前的操作
+
+savepoint + 回滚点	// 设置回滚点
+rollback to 回滚点 // 返回回滚点
+
+四大特性ACID
+atomicity	原子性		不能再分了，事务是一个整体，要么一起执行，要么全部不执行
+consistency 一致性		事务完成后，数据也要相对应的同步
+isolation 	隔离性		每个事务都是相互隔离的
+durability	持久性		事务一旦提交，就不能再更改了
+
+
+```
+
+注意事项：
+
+必须保证数据库的引擎为 innodb ，才能使用事务
+
+
+
+### 索引
+
+index
+
+优点：帮助快速查询
+
+缺点：增删改效率降低；占用内存
+
+分类：主键索引，唯一键索引，普通索引，全局索引
+
+```mysql
+// 创建索引
+create index balance_index on wellet(balance); 	// 普通索引
+create unique index score_index on student(score);
+```
+
+
+
+### 存储过程
+
+```mysql
+delimiter //				// 将语句结束符 ; 更改为 // 
+create procedure proc()		 // 存储过程
+	begin
+	update wallet set balance=balance+50;
+	update t3 set name='Tom';
+	end //
+	
+delimiter ;					// 将语句结束符 // 更改为 ;
+
+call proc();				// 调用存储过程，执行
+drop procedure porc;		 // 删除存储过程
+
+show create procedure proc;	 // 查看存储过程
+
+show procedure status \G	 // 查看所有存储过程
+```
+
+
+
+### 有趣的函数
+
+#### number
+
+```mysql
+select rand();			// 生成一个随机数
+select * from student order by rand() limit 3;
+	// 从student表中随机取3个人（抽奖）
+select * from student order by rand();
+	// 随机排序
+
+select ceil(3.1);		// 向上取整
+select floor(3.1);		// 向下取整
+select round(3.5);    	// 四舍五入
+select turncate(3.1415926, 2);	// 截取x位
+
+```
+
+#### string
+
+```mysql
+select ucase('frank');		// 转换为大写
+select lcase('FRANK');		// 转换为小写
+select left('Frank',2);		// 从左截取
+select right('frabk',2);	// 从右截取
+select substring('frank',2,3);	// 从第二位开始截取3位
+select concat('frank','frank');	// 连接字符串
+
+```
+
+#### other
+
+```mysql
+select now();			// 获取当前时间
+select unix_timestap();
+select sha("frank");			// 加密字符串
+
+```
+
+
+
+## 企业规范约束
+
+
+
+
+
+
+
