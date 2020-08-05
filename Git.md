@@ -55,11 +55,11 @@ $ cd ..		// 回退到上一个目录
 $ pwd		// 打印工作目录，它会显示我们当前所在的目录路径
 $ ls		// 列出当前目录中的所有文件
 $ ll 		// 详细列出当前目录中的所有文件
-$ touch      // 新建一个文件 如 touch index.js 
+$ touch     // 新建一个文件 如 touch index.js 
 $ rm		// remove，删除一个文件
 $ mkdir		// make directory 新建一个目录,就是新建一个文件夹
-$ rm -r		// 删除一个文件夹， r (recusive 是递归的意思)， 删除用的就是递归，先删除文				件夹里面的内容，再删除文件夹
-$ mv		// 移动文件, mv index.html src   index.html 是我们要移动的文件, src 是				目标文件夹,当然, 这样写,必须保证文件和目标文件夹在同一目录下.
+$ rm -r		// 删除一个文件夹， r (recusive 是递归的意思)， 删除用的就是递归，先删除文			件夹里面的内容，再删除文件夹
+$ mv		// 移动文件, mv index.html src   index.html 是我们要移动的文件, src 是			目标文件夹,当然, 这样写,必须保证文件和目标文件夹在同一目录下.
 $ reset		// 清屏，把git bash命令窗口中的所有内容清空
 $ exit 		// 可以直接退出窗口
 
@@ -86,7 +86,7 @@ $ exit 		// 可以直接退出窗口
 ```
 $ mkdir learngit
 $ cd learngit
-$ pwd			// 用于显示当前目录
+$ pwd		// 用于显示当前目录
 ```
 
 Windows系统必须保证目录名（包括父目录）不包含中文名！
@@ -295,7 +295,7 @@ $ git clone git@github.com:xuan-jin/huangfu.git
 当我们创建新的分支，例如`dev`时，Git新建了一个指针叫`dev`，指向`master`相同的提交，再把`HEAD`指向`dev`，就表示当前分支在`dev`上
 
 ```
-$ git checkout -b dev			// 创建并切换到dev分支
+$ git checkout -b dev			 // 创建并切换到dev分支
 $ git switch -c dev				// 同上
 
 $ git branch dev				// 创建dev分支
@@ -303,7 +303,7 @@ $ git checkout dev				// 切换到dev分支
 
 $ git branch					// 查看分支，当前分支前有*。
 
-$ git checkout master			// 切换回master分支
+$ git checkout master			 // 切换回master分支
 $ git merge dev					//把dev分支的工作合并到master分支上
 (合并某分支到当前分支)
 
